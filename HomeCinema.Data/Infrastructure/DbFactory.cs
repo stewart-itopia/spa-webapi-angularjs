@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HomeCinema.Data.Infrastructure
+﻿namespace HomeCinema.Data.Infrastructure
 {
     public class DbFactory : Disposable, IDbFactory
     {
-        HomeCinemaContext dbContext;
+        private HomeCinemaContext dbContext;
 
         public HomeCinemaContext Init()
         {
