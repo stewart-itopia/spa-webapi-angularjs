@@ -1,7 +1,7 @@
-﻿(function (app) {
-    'use strict';
+﻿(function(app) {
+    "use strict";
 
-    app.factory('notificationService', notificationService);
+    app.factory("notificationService", notificationService);
 
     function notificationService() {
 
@@ -30,7 +30,7 @@
 
         function displayError(error) {
             if (Array.isArray(error)) {
-                error.forEach(function (err) {
+                error.forEach(function(err) {
                     toastr.error(err);
                 });
             } else {
@@ -48,4 +48,4 @@
 
     }
 
-})(angular.module('common.core'));
+})(angular.module("common.core"));

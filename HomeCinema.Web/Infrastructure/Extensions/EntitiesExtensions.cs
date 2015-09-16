@@ -1,9 +1,6 @@
-﻿using HomeCinema.Entities;
+﻿using System;
+using HomeCinema.Entities;
 using HomeCinema.Web.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace HomeCinema.Web.Infrastructure.Extensions
 {
@@ -31,8 +28,11 @@ namespace HomeCinema.Web.Infrastructure.Extensions
             customer.DateOfBirth = customerVm.DateOfBirth;
             customer.Email = customerVm.Email;
             customer.UniqueKey = (customerVm.UniqueKey == null || customerVm.UniqueKey == Guid.Empty)
-                ? Guid.NewGuid() : customerVm.UniqueKey;
-            customer.RegistrationDate = (customer.RegistrationDate == DateTime.MinValue ? DateTime.Now : customerVm.RegistrationDate);
+                ? Guid.NewGuid()
+                : customerVm.UniqueKey;
+            customer.RegistrationDate = (customer.RegistrationDate == DateTime.MinValue
+                ? DateTime.Now
+                : customerVm.RegistrationDate);
         }
     }
 }

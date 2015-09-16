@@ -1,12 +1,12 @@
-﻿(function (app) {
-    'use strict';
+﻿(function(app) {
+    "use strict";
 
-    app.controller('movieDetailsCtrl', movieDetailsCtrl);
+    app.controller("movieDetailsCtrl", movieDetailsCtrl);
 
-    movieDetailsCtrl.$inject = ['$scope', '$location', '$routeParams', '$modal', 'apiService', 'notificationService'];
+    movieDetailsCtrl.$inject = ["$scope", "$location", "$routeParams", "$modal", "apiService", "notificationService"];
 
     function movieDetailsCtrl($scope, $location, $routeParams, $modal, apiService, notificationService) {
-        $scope.pageClass = 'page-movies';
+        $scope.pageClass = "page-movies";
         $scope.movie = {};
         $scope.loadingMovie = true;
         $scope.loadingRentals = true;
@@ -22,17 +22,17 @@
 
             $scope.loadingMovie = true;
 
-            apiService.get('/api/movies/details/' + $routeParams.id, null,
-            movieLoadCompleted,
-            movieLoadFailed);
+            apiService.get("/api/movies/details/" + $routeParams.id, null,
+                movieLoadCompleted,
+                movieLoadFailed);
         }
 
         function loadRentalHistory() {
             $scope.loadingRentals = true;
 
-            apiService.get('/api/rentals/' + $routeParams.id + '/rentalhistory', null,
-            rentalHistoryLoadCompleted,
-            rentalHistoryLoadFailed);
+            apiService.get("/api/rentals/" + $routeParams.id + "/rentalhistory", null,
+                rentalHistoryLoadCompleted,
+                rentalHistoryLoadFailed);
         }
 
         function loadMovieDetails() {
@@ -41,27 +41,25 @@
         }
 
         function returnMovie(rentalID) {
-            apiService.post('/api/rentals/return/' + rentalID, null,
-            returnMovieSucceeded,
-            returnMovieFailed);
+            apiService.post("/api/rentals/return/" + rentalID, null,
+                returnMovieSucceeded,
+                returnMovieFailed);
         }
 
-        function isBorrowed(rental)
-        {
-            return rental.Status == 'Borrowed';
+        function isBorrowed(rental) {
+            return rental.Status == "Borrowed";
         }
 
         function getStatusColor(status) {
-            if (status == 'Borrowed')
-                return 'red'
+            if (status == "Borrowed")
+                return "red";
             else {
-                return 'green';
+                return "green";
             }
         }
 
-        function clearSearch()
-        {
-            $scope.filterRentals = '';
+        function clearSearch() {
+            $scope.filterRentals = "";
         }
 
         function movieLoadCompleted(result) {
@@ -84,7 +82,7 @@
         }
 
         function returnMovieSucceeded(response) {
-            notificationService.displaySuccess('Movie returned to HomeCinema succeesfully');
+            notificationService.displaySuccess("Movie returned to HomeCinema succeesfully");
             loadMovieDetails();
         }
 
@@ -94,16 +92,16 @@
 
         function openRentDialog() {
             $modal.open({
-                templateUrl: 'scripts/spa/rental/rentMovieModal.html',
-                controller: 'rentMovieCtrl',
+                templateUrl: "scripts/spa/rental/rentMovieModal.html",
+                controller: "rentMovieCtrl",
                 scope: $scope
-            }).result.then(function ($scope) {
+            }).result.then(function($scope) {
                 loadMovieDetails();
-            }, function () {
+            }, function() {
             });
         }
 
         loadMovieDetails();
     }
 
-})(angular.module('homeCinema'));
+})(angular.module("homeCinema"));

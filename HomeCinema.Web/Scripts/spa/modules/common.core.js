@@ -1,6 +1,6 @@
-﻿(function () {
-	'use strict';
+﻿(function() {
+    "use strict";
 
-	angular.module('common.core', ['ngRoute', 'ngCookies', 'base64', 'angularFileUpload', 'angularValidator', 'angucomplete-alt']);
+    angular.module("common.core", ["ngRoute", "ngCookies", "base64", "angularFileUpload", "angularValidator", "angucomplete-alt"]);
 
 })();

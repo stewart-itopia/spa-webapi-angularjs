@@ -1,16 +1,16 @@
-﻿(function (app) {
-    'use strict';
+﻿(function(app) {
+    "use strict";
 
-    app.controller('moviesCtrl', moviesCtrl);
+    app.controller("moviesCtrl", moviesCtrl);
 
-    moviesCtrl.$inject = ['$scope', 'apiService','notificationService'];
+    moviesCtrl.$inject = ["$scope", "apiService", "notificationService"];
 
     function moviesCtrl($scope, apiService, notificationService) {
-        $scope.pageClass = 'page-movies';
+        $scope.pageClass = "page-movies";
         $scope.loadingMovies = true;
         $scope.page = 0;
         $scope.pagesCount = 0;
-        
+
         $scope.Movies = [];
 
         $scope.search = search;
@@ -29,9 +29,9 @@
                 }
             };
 
-            apiService.get('/api/movies/', config,
-            moviesLoadCompleted,
-            moviesLoadFailed);
+            apiService.get("/api/movies/", config,
+                moviesLoadCompleted,
+                moviesLoadFailed);
         }
 
         function moviesLoadCompleted(result) {
@@ -41,11 +41,10 @@
             $scope.totalCount = result.data.TotalCount;
             $scope.loadingMovies = false;
 
-            if ($scope.filterMovies && $scope.filterMovies.length)
-            {
-                notificationService.displayInfo(result.data.Items.length + ' movies found');
+            if ($scope.filterMovies && $scope.filterMovies.length) {
+                notificationService.displayInfo(result.data.Items.length + " movies found");
             }
-            
+
         }
 
         function moviesLoadFailed(response) {
@@ -53,11 +52,11 @@
         }
 
         function clearSearch() {
-            $scope.filterMovies = '';
+            $scope.filterMovies = "";
             search();
         }
 
         $scope.search();
     }
 
-})(angular.module('homeCinema'));
+})(angular.module("homeCinema"));

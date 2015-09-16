@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HomeCinema.Entities
 {
@@ -12,7 +9,7 @@ namespace HomeCinema.Entities
         {
             Stocks = new List<Stock>();
         }
-        public int ID { get; set; }
+
         public string Title { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
@@ -25,5 +22,6 @@ namespace HomeCinema.Entities
         public byte Rating { get; set; }
         public string TrailerURI { get; set; }
         public virtual ICollection<Stock> Stocks { get; set; }
+        public int ID { get; set; }
     }
 }

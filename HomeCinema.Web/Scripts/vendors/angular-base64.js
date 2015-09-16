@@ -1,5 +1,5 @@
 (function() {
-    'use strict';
+    "use strict";
 
     /*
      * Encapsulation of Nick Galbreath's base64.js library for AngularJS
@@ -54,13 +54,13 @@
      *   then an exception is thrown.
      */
 
-    angular.module('base64', []).constant('$base64', (function() {
+    angular.module("base64", []).constant("$base64", (function() {
 
-        var PADCHAR = '=';
+        var PADCHAR = "=";
 
-        var ALPHA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+        var ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-        function getbyte64(s,i) {
+        function getbyte64(s, i) {
             var idx = ALPHA.indexOf(s.charAt(i));
             if (idx == -1) {
                 throw "Cannot decode base64";
@@ -82,9 +82,9 @@
             }
 
             pads = 0;
-            if (s.charAt(imax -1) == PADCHAR) {
+            if (s.charAt(imax - 1) == PADCHAR) {
                 pads = 1;
-                if (s.charAt(imax -2) == PADCHAR) {
+                if (s.charAt(imax - 2) == PADCHAR) {
                     pads = 2;
                 }
                 // either way, we want to ignore this last block
@@ -93,25 +93,25 @@
 
             var x = [];
             for (i = 0; i < imax; i += 4) {
-                b10 = (getbyte64(s,i) << 18) | (getbyte64(s,i+1) << 12) |
-                    (getbyte64(s,i+2) << 6) | getbyte64(s,i+3);
+                b10 = (getbyte64(s, i) << 18) | (getbyte64(s, i + 1) << 12) |
+                (getbyte64(s, i + 2) << 6) | getbyte64(s, i + 3);
                 x.push(String.fromCharCode(b10 >> 16, (b10 >> 8) & 0xff, b10 & 0xff));
             }
 
             switch (pads) {
-                case 1:
-                    b10 = (getbyte64(s,i) << 18) | (getbyte64(s,i+1) << 12) | (getbyte64(s,i+2) << 6);
-                    x.push(String.fromCharCode(b10 >> 16, (b10 >> 8) & 0xff));
-                    break;
-                case 2:
-                    b10 = (getbyte64(s,i) << 18) | (getbyte64(s,i+1) << 12);
-                    x.push(String.fromCharCode(b10 >> 16));
-                    break;
+            case 1:
+                b10 = (getbyte64(s, i) << 18) | (getbyte64(s, i + 1) << 12) | (getbyte64(s, i + 2) << 6);
+                x.push(String.fromCharCode(b10 >> 16, (b10 >> 8) & 0xff));
+                break;
+            case 2:
+                b10 = (getbyte64(s, i) << 18) | (getbyte64(s, i + 1) << 12);
+                x.push(String.fromCharCode(b10 >> 16));
+                break;
             }
-            return x.join('');
+            return x.join("");
         }
 
-        function getbyte(s,i) {
+        function getbyte(s, i) {
             var x = s.charCodeAt(i);
             if (x > 255) {
                 throw "INVALID_CHARACTER_ERR: DOM Exception 5";
@@ -136,25 +136,25 @@
                 return s;
             }
             for (i = 0; i < imax; i += 3) {
-                b10 = (getbyte(s,i) << 16) | (getbyte(s,i+1) << 8) | getbyte(s,i+2);
+                b10 = (getbyte(s, i) << 16) | (getbyte(s, i + 1) << 8) | getbyte(s, i + 2);
                 x.push(ALPHA.charAt(b10 >> 18));
                 x.push(ALPHA.charAt((b10 >> 12) & 0x3F));
                 x.push(ALPHA.charAt((b10 >> 6) & 0x3f));
                 x.push(ALPHA.charAt(b10 & 0x3f));
             }
             switch (s.length - imax) {
-                case 1:
-                    b10 = getbyte(s,i) << 16;
-                    x.push(ALPHA.charAt(b10 >> 18) + ALPHA.charAt((b10 >> 12) & 0x3F) +
-                        PADCHAR + PADCHAR);
-                    break;
-                case 2:
-                    b10 = (getbyte(s,i) << 16) | (getbyte(s,i+1) << 8);
-                    x.push(ALPHA.charAt(b10 >> 18) + ALPHA.charAt((b10 >> 12) & 0x3F) +
-                        ALPHA.charAt((b10 >> 6) & 0x3f) + PADCHAR);
-                    break;
+            case 1:
+                b10 = getbyte(s, i) << 16;
+                x.push(ALPHA.charAt(b10 >> 18) + ALPHA.charAt((b10 >> 12) & 0x3F) +
+                    PADCHAR + PADCHAR);
+                break;
+            case 2:
+                b10 = (getbyte(s, i) << 16) | (getbyte(s, i + 1) << 8);
+                x.push(ALPHA.charAt(b10 >> 18) + ALPHA.charAt((b10 >> 12) & 0x3F) +
+                    ALPHA.charAt((b10 >> 6) & 0x3f) + PADCHAR);
+                break;
             }
-            return x.join('');
+            return x.join("");
         }
 
         return {

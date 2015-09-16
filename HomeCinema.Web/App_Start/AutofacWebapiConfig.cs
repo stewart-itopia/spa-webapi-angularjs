@@ -1,25 +1,20 @@
-﻿using Autofac;
-using Autofac.Core;
+﻿using System.Data.Entity;
+using System.Reflection;
+using System.Web.Http;
+using Autofac;
 using Autofac.Integration.WebApi;
 using HomeCinema.Data;
 using HomeCinema.Data.Infrastructure;
 using HomeCinema.Data.Repositories;
 using HomeCinema.Services;
 using HomeCinema.Web.Infrastructure.Core;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Net.Http;
-using System.Reflection;
-using System.Web;
-using System.Web.Http;
 
 namespace HomeCinema.Web.App_Start
 {
     public class AutofacWebapiConfig
     {
         public static IContainer Container;
+
         public static void Initialize(HttpConfiguration config)
         {
             Initialize(config, RegisterServices(new ContainerBuilder()));
@@ -36,8 +31,8 @@ namespace HomeCinema.Web.App_Start
 
             // EF HomeCinemaContext
             builder.RegisterType<HomeCinemaContext>()
-                   .As<DbContext>()
-                   .InstancePerRequest();
+                .As<DbContext>()
+                .InstancePerRequest();
 
             builder.RegisterType<DbFactory>()
                 .As<IDbFactory>()
@@ -47,9 +42,9 @@ namespace HomeCinema.Web.App_Start
                 .As<IUnitOfWork>()
                 .InstancePerRequest();
 
-            builder.RegisterGeneric(typeof(EntityBaseRepository<>))
-                   .As(typeof(IEntityBaseRepository<>))
-                   .InstancePerRequest();
+            builder.RegisterGeneric(typeof (EntityBaseRepository<>))
+                .As(typeof (IEntityBaseRepository<>))
+                .InstancePerRequest();
 
             // Services
             builder.RegisterType<EncryptionService>()

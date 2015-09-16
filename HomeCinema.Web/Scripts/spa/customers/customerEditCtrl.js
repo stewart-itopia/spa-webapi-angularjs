@@ -1,9 +1,9 @@
-﻿(function (app) {
-    'use strict';
+﻿(function(app) {
+    "use strict";
 
-    app.controller('customerEditCtrl', customerEditCtrl);
+    app.controller("customerEditCtrl", customerEditCtrl);
 
-    customerEditCtrl.$inject = ['$scope', '$modalInstance','$timeout', 'apiService', 'notificationService'];
+    customerEditCtrl.$inject = ["$scope", "$modalInstance", "$timeout", "apiService", "notificationService"];
 
     function customerEditCtrl($scope, $modalInstance, $timeout, apiService, notificationService) {
 
@@ -12,28 +12,25 @@
 
         $scope.openDatePicker = openDatePicker;
         $scope.dateOptions = {
-            formatYear: 'yy',
+            formatYear: "yy",
             startingDay: 1
         };
         $scope.datepicker = {};
 
-        function updateCustomer()
-        {
+        function updateCustomer() {
             console.log($scope.EditedCustomer);
-            apiService.post('/api/customers/update/', $scope.EditedCustomer,
-            updateCustomerCompleted,
-            updateCustomerLoadFailed);
+            apiService.post("/api/customers/update/", $scope.EditedCustomer,
+                updateCustomerCompleted,
+                updateCustomerLoadFailed);
         }
 
-        function updateCustomerCompleted(response)
-        {
-            notificationService.displaySuccess($scope.EditedCustomer.FirstName + ' ' + $scope.EditedCustomer.LastName + ' has been updated');
+        function updateCustomerCompleted(response) {
+            notificationService.displaySuccess($scope.EditedCustomer.FirstName + " " + $scope.EditedCustomer.LastName + " has been updated");
             $scope.EditedCustomer = {};
             $modalInstance.dismiss();
         }
 
-        function updateCustomerLoadFailed(response)
-        {
+        function updateCustomerLoadFailed(response) {
             notificationService.displayError(response.data);
         }
 
@@ -46,13 +43,13 @@
             $event.preventDefault();
             $event.stopPropagation();
 
-            console.log('test');
-            $timeout(function () {
+            console.log("test");
+            $timeout(function() {
                 $scope.datepicker.opened = true;
             });
-            
+
         };
 
     }
 
-})(angular.module('homeCinema'));
+})(angular.module("homeCinema"));

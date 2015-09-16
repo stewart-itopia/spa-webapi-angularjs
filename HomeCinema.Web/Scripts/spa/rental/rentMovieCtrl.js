@@ -1,9 +1,9 @@
-﻿(function (app) {
-    'use strict';
+﻿(function(app) {
+    "use strict";
 
-    app.controller('rentMovieCtrl', rentMovieCtrl);
+    app.controller("rentMovieCtrl", rentMovieCtrl);
 
-    rentMovieCtrl.$inject = ['$scope', '$modalInstance', '$location', 'apiService', 'notificationService'];
+    rentMovieCtrl.$inject = ["$scope", "$modalInstance", "$location", "apiService", "notificationService"];
 
     function rentMovieCtrl($scope, $modalInstance, $location, apiService, notificationService) {
 
@@ -18,11 +18,11 @@
         $scope.isEnabled = false;
 
         function loadStockItems() {
-            notificationService.displayInfo('Loading available stock items for ' + $scope.movie.Title);
+            notificationService.displayInfo("Loading available stock items for " + $scope.movie.Title);
 
-            apiService.get('/api/stocks/movie/' + $scope.movie.ID, null,
-            stockItemsLoadCompleted,
-            stockItemsLoadFailed);
+            apiService.get("/api/stocks/movie/" + $scope.movie.ID, null,
+                stockItemsLoadCompleted,
+                stockItemsLoadFailed);
         }
 
         function stockItemsLoadCompleted(response) {
@@ -37,13 +37,13 @@
         }
 
         function rentMovie() {
-            apiService.post('/api/rentals/rent/' + $scope.selectedCustomer + '/' + $scope.selectedStockItem, null,
-            rentMovieSucceeded,
-            rentMovieFailed);
+            apiService.post("/api/rentals/rent/" + $scope.selectedCustomer + "/" + $scope.selectedStockItem, null,
+                rentMovieSucceeded,
+                rentMovieFailed);
         }
 
         function rentMovieSucceeded(response) {
-            notificationService.displaySuccess('Rental completed successfully');
+            notificationService.displaySuccess("Rental completed successfully");
             $modalInstance.close();
         }
 
@@ -62,8 +62,7 @@
             if ($item) {
                 $scope.selectedCustomer = $item.originalObject.ID;
                 $scope.isEnabled = true;
-            }
-            else {
+            } else {
                 $scope.selectedCustomer = -1;
                 $scope.isEnabled = false;
             }
@@ -75,4 +74,4 @@
         loadStockItems();
     }
 
-})(angular.module('homeCinema'));
+})(angular.module("homeCinema"));

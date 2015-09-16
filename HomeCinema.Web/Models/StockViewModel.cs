@@ -1,11 +1,8 @@
-﻿using HomeCinema.Web.Infrastructure.Validators;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using HomeCinema.Web.Infrastructure.Validators;
 
 namespace HomeCinema.Web.Models
 {
@@ -19,7 +16,7 @@ namespace HomeCinema.Web.Models
         {
             var validator = new StockViewModelValidator();
             var result = validator.Validate(this);
-            return result.Errors.Select(item => new ValidationResult(item.ErrorMessage, new[] { item.PropertyName }));
+            return result.Errors.Select(item => new ValidationResult(item.ErrorMessage, new[] {item.PropertyName}));
         }
     }
 }

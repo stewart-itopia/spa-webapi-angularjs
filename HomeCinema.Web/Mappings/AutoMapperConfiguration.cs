@@ -1,8 +1,4 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace HomeCinema.Web.Mappings
 {
@@ -10,10 +6,7 @@ namespace HomeCinema.Web.Mappings
     {
         public static void Configure()
         {
-            Mapper.Initialize(x =>
-            {
-                x.AddProfile<DomainToViewModelMappingProfile>();
-            });
+            Mapper.Initialize(x => { x.AddProfile<DomainToViewModelMappingProfile>(); });
         }
     }
 }

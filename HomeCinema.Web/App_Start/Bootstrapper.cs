@@ -1,9 +1,5 @@
-﻿using HomeCinema.Web.Mappings;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
+﻿using System.Web.Http;
+using HomeCinema.Web.Mappings;
 
 namespace HomeCinema.Web.App_Start
 {

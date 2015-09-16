@@ -1,16 +1,15 @@
-﻿using AutoMapper;
-using HomeCinema.Data.Infrastructure;
-using HomeCinema.Data.Repositories;
-using HomeCinema.Entities;
-using HomeCinema.Web.Infrastructure.Core;
-using HomeCinema.Web.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using AutoMapper;
 using HomeCinema.Data.Extensions;
+using HomeCinema.Data.Infrastructure;
+using HomeCinema.Entities;
+using HomeCinema.Web.Infrastructure.Core;
+using HomeCinema.Web.Models;
 
 namespace HomeCinema.Web.Controllers
 {
@@ -18,15 +17,16 @@ namespace HomeCinema.Web.Controllers
     [RoutePrefix("api/rentalsextended")]
     public class RentalsExtendedController : ApiControllerBaseExtended
     {
-
         public RentalsExtendedController(IDataRepositoryFactory dataRepositoryFactory, IUnitOfWork unitOfWork)
-            : base(dataRepositoryFactory, unitOfWork) { }
+            : base(dataRepositoryFactory, unitOfWork)
+        {
+        }
 
         [HttpPost]
         [Route("rent/{customerId:int}/{stockId:int}")]
         public HttpResponseMessage Rent(HttpRequestMessage request, int customerId, int stockId)
         {
-            _requiredRepositories = new List<Type>() { typeof(Customer), typeof(Stock), typeof(Rental) };
+            _requiredRepositories = new List<Type> {typeof (Customer), typeof (Stock), typeof (Rental)};
 
             return CreateHttpResponse(request, _requiredRepositories, () =>
             {
@@ -43,7 +43,7 @@ namespace HomeCinema.Web.Controllers
                 {
                     if (stock.IsAvailable)
                     {
-                        Rental _rental = new Rental()
+                        var _rental = new Rental
                         {
                             CustomerId = customerId,
                             StockId = stockId,
@@ -57,12 +57,13 @@ namespace HomeCinema.Web.Controllers
 
                         _unitOfWork.Commit();
 
-                        RentalViewModel rentalVm = Mapper.Map<Rental, RentalViewModel>(_rental);
+                        var rentalVm = Mapper.Map<Rental, RentalViewModel>(_rental);
 
-                        response = request.CreateResponse<RentalViewModel>(HttpStatusCode.Created, rentalVm);
+                        response = request.CreateResponse(HttpStatusCode.Created, rentalVm);
                     }
                     else
-                        response = request.CreateErrorResponse(HttpStatusCode.BadRequest, "Selected stock is not available anymore");
+                        response = request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                            "Selected stock is not available anymore");
                 }
 
                 return response;
@@ -73,7 +74,7 @@ namespace HomeCinema.Web.Controllers
         [Route("return/{rentalId:int}")]
         public HttpResponseMessage Return(HttpRequestMessage request, int rentalId)
         {
-            _requiredRepositories = new List<Type>() { typeof(Rental) };
+            _requiredRepositories = new List<Type> {typeof (Rental)};
 
             return CreateHttpResponse(request, _requiredRepositories, () =>
             {
@@ -102,15 +103,22 @@ namespace HomeCinema.Web.Controllers
         [Route("{id:int}/rentalhistory")]
         public HttpResponseMessage RentalHistory(HttpRequestMessage request, int id)
         {
-            _requiredRepositories = new List<Type>() { typeof(Customer), typeof(Stock), typeof(Rental), typeof(Customer), typeof(Movie) };
+            _requiredRepositories = new List<Type>
+            {
+                typeof (Customer),
+                typeof (Stock),
+                typeof (Rental),
+                typeof (Customer),
+                typeof (Movie)
+            };
 
             return CreateHttpResponse(request, _requiredRepositories, () =>
             {
                 HttpResponseMessage response = null;
 
-                List<RentalHistoryViewModel> _rentalHistory = GetMovieRentalHistory(id);
+                var _rentalHistory = GetMovieRentalHistory(id);
 
-                response = request.CreateResponse<List<RentalHistoryViewModel>>(HttpStatusCode.OK, _rentalHistory);
+                response = request.CreateResponse(HttpStatusCode.OK, _rentalHistory);
 
                 return response;
             });
@@ -120,19 +128,26 @@ namespace HomeCinema.Web.Controllers
         [Route("rentalhistory")]
         public HttpResponseMessage TotalRentalHistory(HttpRequestMessage request)
         {
-            _requiredRepositories = new List<Type>() { typeof(Customer), typeof(Stock), typeof(Rental), typeof(Customer), typeof(Movie) };
+            _requiredRepositories = new List<Type>
+            {
+                typeof (Customer),
+                typeof (Stock),
+                typeof (Rental),
+                typeof (Customer),
+                typeof (Movie)
+            };
 
             return CreateHttpResponse(request, _requiredRepositories, () =>
             {
                 HttpResponseMessage response = null;
 
-                List<TotalRentalHistoryViewModel> _totalMoviesRentalHistory = new List<TotalRentalHistoryViewModel>();
+                var _totalMoviesRentalHistory = new List<TotalRentalHistoryViewModel>();
 
                 var movies = _moviesRepository.GetAll();
 
                 foreach (var movie in movies)
                 {
-                    TotalRentalHistoryViewModel _totalRentalHistory = new TotalRentalHistoryViewModel()
+                    var _totalRentalHistory = new TotalRentalHistoryViewModel
                     {
                         ID = movie.ID,
                         Title = movie.Title,
@@ -144,17 +159,18 @@ namespace HomeCinema.Web.Controllers
                         _totalMoviesRentalHistory.Add(_totalRentalHistory);
                 }
 
-                response = request.CreateResponse<List<TotalRentalHistoryViewModel>>(HttpStatusCode.OK, _totalMoviesRentalHistory);
+                response = request.CreateResponse(HttpStatusCode.OK, _totalMoviesRentalHistory);
 
                 return response;
             });
         }
 
         #region Private methods
+
         private List<RentalHistoryViewModel> GetMovieRentalHistory(int movieId)
         {
-            List<RentalHistoryViewModel> _rentalHistory = new List<RentalHistoryViewModel>();
-            List<Rental> rentals = new List<Rental>();
+            var _rentalHistory = new List<RentalHistoryViewModel>();
+            var rentals = new List<Rental>();
 
             var movie = _moviesRepository.GetSingle(movieId);
 
@@ -165,7 +181,7 @@ namespace HomeCinema.Web.Controllers
 
             foreach (var rental in rentals)
             {
-                RentalHistoryViewModel _historyItem = new RentalHistoryViewModel()
+                var _historyItem = new RentalHistoryViewModel
                 {
                     ID = rental.ID,
                     StockId = rental.StockId,
@@ -185,17 +201,17 @@ namespace HomeCinema.Web.Controllers
 
         private List<RentalHistoryPerDate> GetMovieRentalHistoryPerDates(int movieId)
         {
-            List<RentalHistoryPerDate> listHistory = new List<RentalHistoryPerDate>();
-            List<RentalHistoryViewModel> _rentalHistory = GetMovieRentalHistory(movieId);
+            var listHistory = new List<RentalHistoryPerDate>();
+            var _rentalHistory = GetMovieRentalHistory(movieId);
             if (_rentalHistory.Count > 0)
             {
-                List<DateTime> _distinctDates = new List<DateTime>();
+                var _distinctDates = new List<DateTime>();
                 _distinctDates = _rentalHistory.Select(h => h.RentalDate.Date).Distinct().ToList();
 
                 foreach (var distinctDate in _distinctDates)
                 {
                     var totalDateRentals = _rentalHistory.Count(r => r.RentalDate.Date == distinctDate);
-                    RentalHistoryPerDate _movieRentalHistoryPerDate = new RentalHistoryPerDate()
+                    var _movieRentalHistoryPerDate = new RentalHistoryPerDate
                     {
                         Date = distinctDate,
                         TotalRentals = totalDateRentals

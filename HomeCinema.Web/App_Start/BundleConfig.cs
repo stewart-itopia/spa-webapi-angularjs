@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace HomeCinema.Web.App_Start
 {
@@ -68,7 +64,7 @@ namespace HomeCinema.Web.App_Start
                 "~/content/css/site.css",
                 "~/content/css/bootstrap.css",
                 "~/content/css/bootstrap-theme.css",
-                 "~/content/css/font-awesome.css",
+                "~/content/css/font-awesome.css",
                 "~/content/css/morris.css",
                 "~/content/css/toastr.css",
                 "~/content/css/jquery.fancybox.css",

@@ -1,9 +1,9 @@
-﻿(function (app) {
-    'use strict';
+﻿(function(app) {
+    "use strict";
 
-    app.factory('membershipService', membershipService);
+    app.factory("membershipService", membershipService);
 
-    membershipService.$inject = ['apiService', 'notificationService','$http', '$base64', '$cookieStore', '$rootScope'];
+    membershipService.$inject = ["apiService", "notificationService", "$http", "$base64", "$cookieStore", "$rootScope"];
 
     function membershipService(apiService, notificationService, $http, $base64, $cookieStore, $rootScope) {
 
@@ -13,22 +13,22 @@
             saveCredentials: saveCredentials,
             removeCredentials: removeCredentials,
             isUserLoggedIn: isUserLoggedIn
-        }
+        };
 
         function login(user, completed) {
-            apiService.post('/api/account/authenticate', user,
-            completed,
-            loginFailed);
+            apiService.post("/api/account/authenticate", user,
+                completed,
+                loginFailed);
         }
 
         function register(user, completed) {
-            apiService.post('/api/account/register', user,
-            completed,
-            registrationFailed);
+            apiService.post("/api/account/register", user,
+                completed,
+                registrationFailed);
         }
 
         function saveCredentials(user) {
-            var membershipData = $base64.encode(user.username + ':' + user.password);
+            var membershipData = $base64.encode(user.username + ":" + user.password);
 
             $rootScope.repository = {
                 loggedUser: {
@@ -37,14 +37,14 @@
                 }
             };
 
-            $http.defaults.headers.common['Authorization'] = 'Basic ' + membershipData;
-            $cookieStore.put('repository', $rootScope.repository);
+            $http.defaults.headers.common["Authorization"] = "Basic " + membershipData;
+            $cookieStore.put("repository", $rootScope.repository);
         }
 
         function removeCredentials() {
             $rootScope.repository = {};
-            $cookieStore.remove('repository');
-            $http.defaults.headers.common.Authorization = '';
+            $cookieStore.remove("repository");
+            $http.defaults.headers.common.Authorization = "";
         };
 
         function loginFailed(response) {
@@ -53,7 +53,7 @@
 
         function registrationFailed(response) {
 
-            notificationService.displayError('Registration failed. Try again.');
+            notificationService.displayError("Registration failed. Try again.");
         }
 
         function isUserLoggedIn() {
@@ -64,5 +64,4 @@
     }
 
 
-
-})(angular.module('common.core'));
+})(angular.module("common.core"));

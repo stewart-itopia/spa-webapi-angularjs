@@ -1,9 +1,6 @@
-﻿using FluentValidation;
+﻿using System;
+using FluentValidation;
 using HomeCinema.Web.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace HomeCinema.Web.Infrastructure.Validators
 {
@@ -29,7 +26,6 @@ namespace HomeCinema.Web.Infrastructure.Validators
 
             RuleFor(customer => customer.Email).NotEmpty().EmailAddress()
                 .WithMessage("Enter a valid Email address");
-
         }
     }
 }

@@ -1,12 +1,12 @@
-﻿(function (app) {
-    'use strict';
+﻿(function(app) {
+    "use strict";
 
-    app.controller('movieEditCtrl', movieEditCtrl);
+    app.controller("movieEditCtrl", movieEditCtrl);
 
-    movieEditCtrl.$inject = ['$scope', '$location', '$routeParams', 'apiService', 'notificationService', 'fileUploadService'];
+    movieEditCtrl.$inject = ["$scope", "$location", "$routeParams", "apiService", "notificationService", "fileUploadService"];
 
     function movieEditCtrl($scope, $location, $routeParams, apiService, notificationService, fileUploadService) {
-        $scope.pageClass = 'page-movies';
+        $scope.pageClass = "page-movies";
         $scope.movie = {};
         $scope.genres = [];
         $scope.loadingMovie = true;
@@ -16,7 +16,7 @@
         $scope.openDatePicker = openDatePicker;
 
         $scope.dateOptions = {
-            formatYear: 'yy',
+            formatYear: "yy",
             startingDay: 1
         };
         $scope.datepicker = {};
@@ -27,9 +27,9 @@
 
             $scope.loadingMovie = true;
 
-            apiService.get('/api/movies/details/' + $routeParams.id, null,
-            movieLoadCompleted,
-            movieLoadFailed);
+            apiService.get("/api/movies/details/" + $routeParams.id, null,
+                movieLoadCompleted,
+                movieLoadFailed);
         }
 
         function movieLoadCompleted(result) {
@@ -52,23 +52,22 @@
         }
 
         function loadGenres() {
-            apiService.get('/api/genres/', null,
-            genresLoadCompleted,
-            genresLoadFailed);
+            apiService.get("/api/genres/", null,
+                genresLoadCompleted,
+                genresLoadFailed);
         }
 
         function UpdateMovie() {
             if (movieImage) {
                 fileUploadService.uploadImage(movieImage, $scope.movie.ID, UpdateMovieModel);
-            }
-            else
+            } else
                 UpdateMovieModel();
         }
 
         function UpdateMovieModel() {
-            apiService.post('/api/movies/update', $scope.movie,
-            updateMovieSucceded,
-            updateMovieFailed);
+            apiService.post("/api/movies/update", $scope.movie,
+                updateMovieSucceded,
+                updateMovieFailed);
         }
 
         function prepareFiles($files) {
@@ -77,7 +76,7 @@
 
         function updateMovieSucceded(response) {
             console.log(response);
-            notificationService.displaySuccess($scope.movie.Title + ' has been updated');
+            notificationService.displaySuccess($scope.movie.Title + " has been updated");
             $scope.movie = response.data;
             movieImage = null;
         }
@@ -96,4 +95,4 @@
         loadMovie();
     }
 
-})(angular.module('homeCinema'));
+})(angular.module("homeCinema"));

@@ -1,4 +1,4 @@
-﻿<hr />
+﻿<hr/>
 <div class="alert alert-info alert-dismissable">
     <a class="panel-close close" data-dismiss="alert">×</a>
     <i class="fa fa-user-plus fa-3x"></i>
@@ -41,7 +41,7 @@
                 <label for="dateOfBirth">Date of Birth</label>
                 <p class="input-group">
                     <input type="text" class="form-control" name="dateOfBirth" datepicker-popup="{{format}}" ng-model="newCustomer.DateOfBirth" is-open="datepicker.opened" datepicker-options="dateOptions" ng-required="true" datepicker-append-to-body="true" close-text="Close"
-                           validate-on="blur" required required-message="'Date of birth is required'" />
+                           validate-on="blur" required required-message="'Date of birth is required'"/>
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="openDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
@@ -66,7 +66,8 @@
                         <strong>{{message}}</strong>
                     </li>
                 </ul>
-                <strong ng-bind="submission.successMessage"><span class="glyphicon glyphicon-ok"></span> </strong>
+                <strong ng-bind="submission.successMessage">
+                    <span class="glyphicon glyphicon-ok"></span> </strong>
             </div>
             <div class="alert alert-danger">
                 <ul>

@@ -1,12 +1,7 @@
-﻿using HomeCinema.Data.Repositories;
+﻿using System.Net.Http;
+using HomeCinema.Data.Repositories;
 using HomeCinema.Entities;
 using HomeCinema.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Web;
-using System.Web.Http.Dependencies;
 
 namespace HomeCinema.Web.Infrastructure.Extensions
 {
@@ -17,15 +12,16 @@ namespace HomeCinema.Web.Infrastructure.Extensions
             return request.GetService<IMembershipService>();
         }
 
-        internal static IEntityBaseRepository<T> GetDataRepository<T>(this HttpRequestMessage request) where T : class, IEntityBase, new()
+        internal static IEntityBaseRepository<T> GetDataRepository<T>(this HttpRequestMessage request)
+            where T : class, IEntityBase, new()
         {
             return request.GetService<IEntityBaseRepository<T>>();
         }
 
         private static TService GetService<TService>(this HttpRequestMessage request)
         {
-            IDependencyScope dependencyScope = request.GetDependencyScope();
-            TService service = (TService)dependencyScope.GetService(typeof(TService));
+            var dependencyScope = request.GetDependencyScope();
+            var service = (TService) dependencyScope.GetService(typeof (TService));
 
             return service;
         }

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace HomeCinema.Web.Infrastructure.Core
 {
@@ -11,15 +9,11 @@ namespace HomeCinema.Web.Infrastructure.Core
 
         public int Count
         {
-            get
-            {
-                return (null != this.Items) ? this.Items.Count() : 0;
-            }
+            get { return (null != Items) ? Items.Count() : 0; }
         }
 
         public int TotalPages { get; set; }
         public int TotalCount { get; set; }
-
         public IEnumerable<T> Items { get; set; }
     }
 }
